@@ -147,7 +147,7 @@ window.addEventListener('DOMContentLoaded', () => {
   }); //-------------------------------------------------------
   //таймер обратного отсчета
 
-  const deadline = '2021-08-9';
+  const deadline = '2021-11-9';
 
   function getTimeRemaining(endtime) {
     const t = Date.parse(endtime) - Date.parse(new Date()),
@@ -194,7 +194,41 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  setClock('.timer', deadline);
+  setClock('.timer', deadline); //модальное окно 
+  //modal
+
+  const modalTrigger = document.querySelectorAll('[data-modal]'),
+        modal = document.querySelector('.modal'),
+        modalCloseBtn = document.querySelector('[data-close]');
+  modalTrigger.forEach(btn => {
+    btn.addEventListener('click', () => {
+      modal.classList.add('show');
+      modal.classList.remove('hide'); // modal.classList.toggle('show');
+      // modal.style.display = 'block';
+
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeModal() {
+    modal.classList.add('hide');
+    modal.classList.remove('show'); // modal.style.display = 'none';
+    // modal.classList.toggle('show');
+
+    document.body.style.overflow = '';
+  }
+
+  modalCloseBtn.addEventListener('click', closeModal);
+  modal.addEventListener('click', e => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+  document.addEventListener('keydown', e => {
+    if (e.code === "Escape" && modal.classList.contains('show')) {
+      closeModal();
+    }
+  });
 });
 
 /***/ })
